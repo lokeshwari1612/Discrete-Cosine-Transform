@@ -1,0 +1,21 @@
+I=imread('illustration.JPG');
+I=rgb2gray(I);
+figure,
+imshow(I);title('limage original en niveau de gris');
+I=I(1:1600,1:1600);
+figure,
+imshow(I);title('coupure de limage utilisé pour que ces dimensions   sont    multiple de 8');
+figure,
+DCT=dct(I);
+imshow(DCT);title('DCT1');%calcule de DCT avec la function predifinie dct
+DCT2=DCTlocal(I);
+figure,
+imshow(DCT2);title('DCT2');%calcule de DCT avec l'algorithme données
+
+figure,
+Irec=idct(DCT);
+imshow(Irec/255);title('Irec ');
+
+figure,
+Irec2=InvDCTLocale(DCT2);
+imshow(Irec2);title('Irec2');
