@@ -1,0 +1,38 @@
+function image_comp = DCTlocal( I )
+   N=8;
+   [n1,n2]=size(I);
+    I=double(I)-128;
+    block_dct = zeros(N);
+
+    %loop true block
+     for k=1:N:n1
+     for l=1:N:n2
+      %save true image
+      current_block = I(k:k+N-1,l:l+N-1);
+      %loop true cos(u,v)
+       for u=0:N-1
+        for v=0:N-1
+          if u==0
+            Cu = 1/sqrt(2);
+          else
+            Cu = 1;
+          end
+        if v==0
+            Cv = 1/sqrt(2);
+        else
+            Cv = 1;
+        end
+        Res_sum = 0; %loop true pixel values
+         for x=0:N-1
+          for y=0:N-1
+            Res_sum = Res_sum +      ((current_block(x+1,y+1))*cos(((2*x)+1)*u*pi/(2*N))*cos(((2*y)+1)*v*pi/(2*N)));  
+          end
+         end
+         dct = 1/sqrt(2*N) * Cu * Cv * Res_sum; %calculate DCT
+        block_dct(u+1,v+1) = dct;
+      end
+     end
+     image_comp(k:k+N-1,l:l+N-1) = block_dct(u+1,v+1);
+    end
+     end
+    end
